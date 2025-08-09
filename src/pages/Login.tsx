@@ -1,12 +1,12 @@
 import Logo from "@/assets/icons/logo";
 import { LoginForm } from "@/components/modules/authentication/LoginForm";
 import { Link } from "react-router";
-import travelImg from '../assets/images/travel-3.jpg'
+import travelImg from '../assets/images/travel-1.jpg'
 
  
 const Login = () => {
     return (
-        <div className="grid min-h-svh lg:grid-cols-2">
+        <div className="grid min-h-svh lg:grid-cols-2 container mx-auto">
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
           <Link to="/" className="flex items-center gap-2 font-medium">
