@@ -26,15 +26,6 @@ export default function Navbar() {
     dispatch(authApi.util.resetApiState())
   };
 
-//   const handleLogout = async () => {
-//   try {
-//     await logout(undefined) 
-//     dispatch(authApi.util.resetApiState());
-//   } catch (error) {
-//     console.error("Logout failed:", error);
-//   }
-// };
-
 
   return (
     <header className="border-b">

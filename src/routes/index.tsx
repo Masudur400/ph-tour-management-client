@@ -1,25 +1,25 @@
- 
- 
+
+
 import App from "@/App";
-import About from "@/pages/About"; 
+import About from "@/pages/About";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Verify from "@/pages/Verify";
 import { createBrowserRouter } from "react-router";
 
 export const router = createBrowserRouter([
-    {
-        path:'/',
-        // element:<App></App>
-        Component:App,
-        children:[
-            {
-                path:'about',
-                Component:About
-            }
-        ]
-    } ,
-    {
+  {
+    path: '/',
+    // element:<App></App>
+    Component: App,
+    children: [
+      {
+        path: 'about',
+        Component: About
+      }
+    ]
+  },
+  {
     Component: Login,
     path: "/login",
   },

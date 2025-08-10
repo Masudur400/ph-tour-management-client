@@ -33,20 +33,16 @@ export function LoginForm({
   const [login] = useLoginMutation();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      const res = await login(data).unwrap(); 
-      console.log(res);
-
+      const res = await login(data).unwrap();   
       if (res.success) {
         toast.success("Logged in successfully");
         navigate("/");
       }
     } catch (err: any) {
-      console.error(err);
-
+      console.error(err); 
       if (err.data.message === "Password does not match") {
         toast.error("Invalid credentials");
-      }
-
+      } 
       if (err.data.message === "User is not verified") {
         toast.error("Your account is not verified");
         navigate("/verify", { state: data.email });
@@ -116,7 +112,7 @@ export function LoginForm({
 
         {/*//* http://localhost:5000/api/v1/auth/google */}
         <Button
-          onClick={() => window.open(`${config.baseUrl}/auth/google`)}
+          onClick={() => window.location.assign(`${config.baseUrl}/auth/google`)}
           type="button"
           variant="outline"
           className="w-full cursor-pointer"

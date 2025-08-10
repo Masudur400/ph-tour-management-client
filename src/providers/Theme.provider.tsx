@@ -7,10 +7,7 @@ type ThemeProviderProps = {
   children: React.ReactNode
   defaultTheme?: Theme
   storageKey?: string
-}
-
-
-
+} 
 
 
 export function ThemeProvider({
@@ -24,20 +21,16 @@ export function ThemeProvider({
   )
 
   useEffect(() => {
-    const root = window.document.documentElement
-
-    root.classList.remove("light", "dark")
-
+    const root = window.document.documentElement 
+    root.classList.remove("light", "dark") 
     if (theme === "system") {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
         ? "dark"
-        : "light"
-
+        : "light" 
       root.classList.add(systemTheme)
       return
-    }
-
+    } 
     root.classList.add(theme)
   }, [theme])
 
