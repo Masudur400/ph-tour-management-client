@@ -24,14 +24,17 @@ export function LoginForm({
   const form = useForm({
     //! For development only
     defaultValues: {
-      email: "mirhussainmurtaza@gmail.com",
-      password: "12345678",
+      // email: "mirhussainmurtaza@gmail.com",
+      // password: "12345678",
+      email: "",
+      password: "",
     },
   });
   const [login] = useLoginMutation();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      const res = await login(data).unwrap();
+      const res = await login(data).unwrap(); 
+      console.log(res);
 
       if (res.success) {
         toast.success("Logged in successfully");

@@ -1,7 +1,8 @@
+
 import { axiosInstance } from "@/lib/axios";
 import type { BaseQueryFn } from "@reduxjs/toolkit/query";
 // import { BaseQueryFn } from "@reduxjs/toolkit/query";
-import { AxiosError, type AxiosRequestConfig} from "axios";
+import { AxiosError, type AxiosRequestConfig,} from "axios";
 
 const axiosBaseQuery =
   (): BaseQueryFn<
@@ -24,7 +25,8 @@ const axiosBaseQuery =
         params,
         headers,
       });
-      return { data: result.data };
+      console.log(result);
+      return { data: result?.data };
     } catch (axiosError) {
       const err = axiosError as AxiosError;
       return {

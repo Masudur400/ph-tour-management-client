@@ -1,26 +1,41 @@
 import Logo from "@/assets/icons/logo";
 import { Button } from "@/components/ui/button";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import {NavigationMenu,NavigationMenuItem,NavigationMenuLink,NavigationMenuList,} from "@/components/ui/navigation-menu";
+import {Popover,PopoverContent,PopoverTrigger,} from "@/components/ui/popover";
 import { ModeToggle } from "./ModeToggler";
 import { Link } from "react-router";
+import { authApi, useLogoutMutation, useUserInfoQuery } from "@/redux/features/auth/auth.api";
+import { useAppDispatch } from "@/redux/hook"; 
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" }, 
-];
+]
 
 export default function Navbar() {
+
+
+  const { data } = useUserInfoQuery(undefined)
+  const [logout] = useLogoutMutation()
+  const dispatch = useAppDispatch()
+  console.log(data?.data?.email)
+
+  const handleLogout = async () => {
+    await logout(undefined)
+    dispatch(authApi.util.resetApiState())
+  };
+
+//   const handleLogout = async () => {
+//   try {
+//     await logout(undefined) 
+//     dispatch(authApi.util.resetApiState());
+//   } catch (error) {
+//     console.error("Logout failed:", error);
+//   }
+// };
+
+
   return (
     <header className="border-b">
       <div className="container mx-auto px-6 flex h-16 items-center justify-between gap-4">
@@ -77,9 +92,9 @@ export default function Navbar() {
           </Popover>
           {/* Main nav */}
           <div className="flex items-center gap-6">
-            <a href="#" className="text-primary hover:text-primary/90">
+            <Link to='/' className="text-primary hover:text-primary/90">
               <Logo />
-            </a>
+            </Link>
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-2">
@@ -96,9 +111,20 @@ export default function Navbar() {
         </div>
         {/* Right side */}
         <div className="flex items-center gap-3"> 
-          <Button asChild className="text-sm">
-            <Link to="/login">Log in</Link>
-          </Button>
+           {data?.data?.email && (
+            <Button
+              onClick={handleLogout}
+              variant="outline"
+              className="text-sm"
+            >
+              Logout
+            </Button>
+          )}
+          {!data?.data?.email && (
+            <Button asChild className="text-sm">
+              <Link to="/login">Login</Link>
+            </Button>
+          )}
           <ModeToggle></ModeToggle>
         </div>
       </div>
