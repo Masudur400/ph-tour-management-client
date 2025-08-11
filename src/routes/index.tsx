@@ -1,24 +1,46 @@
 
 
 import App from "@/App";
-import About from "@/pages/About";
+import DashboardLayout from "@/components/layoutes/DashboardLayout";
+import About from "@/pages/About"; 
 import Login from "@/pages/Login";
-import Register from "@/pages/Register";
+import Register from "@/pages/Register"; 
 import Verify from "@/pages/Verify";
+import { generateRoutes } from "@/utils/generateRoutes";
 import { createBrowserRouter } from "react-router";
+import { adminSidebarItems } from "./AdminSidebarItems"; 
+import { userSidebarItems } from "./UserSidebarItems";
 
 export const router = createBrowserRouter([
+  // public routers
   {
-    path: '/',
     // element:<App></App>
     Component: App,
+    path: '/',
     children: [
       {
-        path: 'about',
-        Component: About
+        Component: About,
+        path: 'about'
       }
     ]
   },
+  // admin dashboard routes
+  {
+    Component:DashboardLayout,
+    path:'/admin',
+    children:[
+       ...generateRoutes(adminSidebarItems)
+    ]
+  },
+  // user dashboard routes
+  {
+    Component:DashboardLayout,
+    path:'/user',
+    children:[
+      ...generateRoutes(userSidebarItems)
+    ]
+  },
+  // login and register routes 
   {
     Component: Login,
     path: "/login",
