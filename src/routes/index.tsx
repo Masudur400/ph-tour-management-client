@@ -2,14 +2,18 @@
 
 import App from "@/App";
 import DashboardLayout from "@/components/layoutes/DashboardLayout";
-import About from "@/pages/About"; 
+import About from "@/pages/About";
 import Login from "@/pages/Login";
-import Register from "@/pages/Register"; 
+import Register from "@/pages/Register";
 import Verify from "@/pages/Verify";
 import { generateRoutes } from "@/utils/generateRoutes";
-import { createBrowserRouter } from "react-router";
-import { adminSidebarItems } from "./AdminSidebarItems"; 
+import { createBrowserRouter, Navigate } from "react-router";
+import { adminSidebarItems } from "./AdminSidebarItems";
 import { userSidebarItems } from "./UserSidebarItems";
+import Unauthorized from "@/pages/Unauthorized";
+import { withAuth } from "@/utils/withAuth";
+import { role } from "@/constants/role";
+import type { TRole } from "@/types";
 
 export const router = createBrowserRouter([
   // public routers
@@ -19,24 +23,26 @@ export const router = createBrowserRouter([
     path: '/',
     children: [
       {
-        Component: About,
+        Component: withAuth(About),
         path: 'about'
       }
     ]
   },
   // admin dashboard routes
   {
-    Component:DashboardLayout,
-    path:'/admin',
-    children:[
-       ...generateRoutes(adminSidebarItems)
+    Component: withAuth(DashboardLayout, role.superAdmin as TRole),
+    path: '/admin',
+    children: [
+      { index: true, element: <Navigate to="/admin/analytics" /> },
+      ...generateRoutes(adminSidebarItems)
     ]
   },
   // user dashboard routes
   {
-    Component:DashboardLayout,
-    path:'/user',
-    children:[
+    Component: withAuth(DashboardLayout, role.user as TRole),
+    path: '/user',
+    children: [
+      { index: true, element: <Navigate to="/user/bookings" /> },
       ...generateRoutes(userSidebarItems)
     ]
   },
@@ -52,5 +58,9 @@ export const router = createBrowserRouter([
   {
     Component: Verify,
     path: "/verify",
+  },
+  {
+    Component: Unauthorized,
+    path: "/unauthorized",
   },
 ])
