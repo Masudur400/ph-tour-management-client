@@ -8,8 +8,8 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table" 
-import { useGetTourTypesQuery, useRemoveTourTypeMutation } from "@/redux/features/Tour/tour.api";
+} from "@/components/ui/table"  
+import { useGetTourTypesQuery, useRemoveTourTypeMutation } from "@/redux/features/tour/tour.api";
 import { Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 
