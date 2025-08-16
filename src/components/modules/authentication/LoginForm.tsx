@@ -32,10 +32,11 @@ export function LoginForm({
   });
   const [login] = useLoginMutation();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("login...")
     try {
       const res = await login(data).unwrap();   
       if (res.success) {
-        toast.success("Logged in successfully");
+        toast.success("Logged in successfully", {id: toastId});
         navigate("/");
       }
     } catch (err: any) {

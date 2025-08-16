@@ -14,11 +14,11 @@ import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod"; 
+import { zodResolver } from "@hookform/resolvers/zod";
 import Password from "@/components/ui/password";
 import { useRegisterMutation } from "@/redux/features/auth/auth.api";
 import toast from "react-hot-toast";
-import config from "@/config"; 
+import config from "@/config";
 
 const registerSchema = z
   .object({
@@ -57,15 +57,16 @@ export function RegisterForm({
   });
 
   const onSubmit = async (data: z.infer<typeof registerSchema>) => {
+    const toastId = toast.loading("account creating...")
     const userInfo = {
       name: data.name,
       email: data.email,
       password: data.password,
-    }; 
+    };
     try {
       const result = await register(userInfo).unwrap();
       console.log(result);
-      toast.success("User created successfully",{duration:1000});
+      toast.success("User created successfully", { duration: 1000 ,id: toastId });
       navigate("/verify");
     } catch (error) {
       console.error(error);
@@ -165,7 +166,7 @@ export function RegisterForm({
         </div>
 
         <Button
-         onClick={() => window.location.assign(`${config.baseUrl}/auth/google`)}
+          onClick={() => window.location.assign(`${config.baseUrl}/auth/google`)}
           type="button"
           variant="outline"
           className="w-full cursor-pointer"

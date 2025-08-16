@@ -1,5 +1,3 @@
-
-
 import App from "@/App";
 import DashboardLayout from "@/components/layoutes/DashboardLayout";
 import About from "@/pages/About";
@@ -14,6 +12,12 @@ import Unauthorized from "@/pages/Unauthorized";
 import { withAuth } from "@/utils/withAuth";
 import { role } from "@/constants/role";
 import type { TRole } from "@/types";
+import Tours from "@/pages/Tours";
+import TourDetails from "@/pages/TourDetails";
+import Booking from "@/pages/Booking";
+import HomePage from "@/pages/HomePage";
+import Success from "@/pages/payment/Success";
+import Fail from "@/pages/payment/Fail";
 
 export const router = createBrowserRouter([
   // public routers
@@ -23,9 +27,25 @@ export const router = createBrowserRouter([
     path: '/',
     children: [
       {
-        Component: withAuth(About),
-        path: 'about'
-      }
+        Component: HomePage,
+        index: true,
+      },
+      {
+        Component: About,
+        path: "about",
+      },
+      {
+        Component: Tours,
+        path: "tours",
+      },
+      {
+        Component: TourDetails,
+        path: "tours/:id",
+      },
+      {
+        Component: withAuth(Booking),
+        path: "booking/:id",
+      },
     ]
   },
   // admin dashboard routes
@@ -62,5 +82,13 @@ export const router = createBrowserRouter([
   {
     Component: Unauthorized,
     path: "/unauthorized",
+  },
+   {
+    Component: Success,
+    path: "/payment/success",
+  },
+  {
+    Component: Fail,
+    path: "/payment/fail",
   },
 ])
