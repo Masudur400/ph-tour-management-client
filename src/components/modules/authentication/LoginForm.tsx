@@ -12,9 +12,9 @@ import { Input } from "@/components/ui/input";
 import config from "@/config";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
-import {  useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
+import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router"; 
+import { Link, useNavigate } from "react-router";
 
 export function LoginForm({
   className,
@@ -31,19 +31,19 @@ export function LoginForm({
     },
   });
   const [login] = useLoginMutation();
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => { 
     const toastId = toast.loading("login...")
     try {
-      const res = await login(data).unwrap();   
+      const res = await login(data).unwrap();
       if (res.success) {
-        toast.success("Logged in successfully", {id: toastId});
+        toast.success("Logged in successfully", { id: toastId });
         navigate("/");
       }
     } catch (err: any) {
-      console.error(err); 
+      console.error(err);
       if (err.data.message === "Password does not match") {
         toast.error("Invalid credentials");
-      } 
+      }
       if (err.data.message === "User is not verified") {
         toast.error("Your account is not verified");
         navigate("/verify", { state: data.email });
