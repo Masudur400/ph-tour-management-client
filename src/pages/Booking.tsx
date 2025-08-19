@@ -1,6 +1,7 @@
-import { Button } from "@/components/ui/button"; 
+import { Button } from "@/components/ui/button";
 import { useCreateBookingMutation } from "@/redux/features/booking/booking.api";
 import { useGetAllToursQuery } from "@/redux/features/tour/tour.api";
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router";
@@ -44,11 +45,11 @@ export default function Booking() {
 
     try {
       const res = await createBooking(bookingData).unwrap();
-      
+
       console.log(res);
-       
+
       if (res.success) {
-        toast.success('', {id: toastId})
+        toast.success('', { id: toastId })
         window.open(res.data.paymentUrl);
       }
     } catch (err) {
@@ -95,8 +96,17 @@ export default function Booking() {
                   <strong>Location:</strong> {tourData?.location}
                 </div>
                 <div>
-                  <strong>Duration:</strong> {tourData?.startDate} to{" "}
-                  {tourData?.endDate}
+                  <strong>Duration:</strong>{" "} {format(
+                    new Date(
+                      tourData?.startDate ? tourData?.startDate : new Date()
+                    ),
+                    "PP"
+                  )}{" "}
+                  -{" "}
+                  {format(
+                    new Date(tourData?.endDate ? tourData?.endDate : new Date()),
+                    "PP"
+                  )}
                 </div>
                 <div>
                   <strong>Tour Type:</strong> {tourData?.tourType}
